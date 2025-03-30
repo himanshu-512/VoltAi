@@ -5,14 +5,14 @@ import Animated, { useAnimatedProps } from "react-native-reanimated";
 
 const AnimatedRect = Animated.createAnimatedComponent(Rect);
 
-const CustomTank = ({ current, animatedHeight,placeholder,unit,value1 }) => {
+const CustomTank = ({ current, animatedHeight,placeholder,unit,value1,otherStyle }) => {
   const animatedProps = useAnimatedProps(() => ({
     y: 200 - animatedHeight.value,
     height: animatedHeight.value,
   }));
 
   return (
-    <View className="items-center justify-center  ">
+    <View className={`items-center ${otherStyle} justify-center `}>
       {/* Outer glowing capsule shape */}
       <View
         style={{

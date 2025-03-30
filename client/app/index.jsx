@@ -20,7 +20,7 @@ export default function Index() {
       </View>
 
       <TouchableOpacity className="h-[60px] w-[90%] items-center justify-center rounded-full ">
-        <Link href={"/login"}>
+        <Link href={"/sigh-up"}>
           <View
             style={{ border: "1px solid #444444" }}
             className="h-[60px] w-[90%] items-center justify-center rounded-full bg-[#444444]"

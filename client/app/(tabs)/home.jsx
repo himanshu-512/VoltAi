@@ -82,6 +82,7 @@ const Home = () => {
             placeholder={"Current"}
             value1={sensorData.current}
             unit={"A"}
+            otherStyle={{ marginTop: 10 }}
           />
           <CustomTank
             current={sensorData.voltage}

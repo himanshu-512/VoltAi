@@ -6,6 +6,7 @@ import CustomBtn from "../../components/CustomBtn";
 import { router } from "expo-router";
 
 const Login = () => {
+   const router = useRouter();
   return (
     <SafeAreaView className="h-full w-full bg-[#201E1E]">
       <ScrollView className="h-full w-full" contentContainerStyle={{ flexGrow: 1 }}>
@@ -14,7 +15,7 @@ const Login = () => {
         <TouchableOpacity
           className="h-[40px] w-[40px] rounded-full bg-[#444444] mt-10 ml-4 items-center justify-center"
           accessibilityLabel="Go back"
-          onPress={() => console.log("Back pressed")}
+          onPress={() => router.push("/sign-up")}
         >
           <Image
             source={require("../../assets/images/arrow.png")}
