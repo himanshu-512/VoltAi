@@ -15,10 +15,10 @@ const Graphs = () => {
 
   useEffect(() => {
     socket.on("sensor-data1", (data) => {
-      // console.log("Received data:", data);
+       console.log("Received data in graph:", data);
   
-      const { voltage, current, power, totalEnergy } = data; // Ensure you're getting totalEnergy properly
-      const energyValue = totalEnergy ?? 0; 
+      const { voltage, current, power, energy } = data; // Ensure you're getting totalEnergy properly
+      const energyValue = energy ?? 0; 
   
       // console.log("Energy Value:", energyValue);
   

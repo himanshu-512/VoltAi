@@ -1,52 +1,70 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomTank from "../../components/CustomTank";
-import { Easing, useSharedValue, withTiming, useAnimatedProps } from "react-native-reanimated";
+import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 import Graphs from "../../components/Graphs";
 import socket from "../../config/sokite";
+import { useRouter } from "expo-router";
 
 const Home = () => {
-  const [sensorData, setSensorData] = useState({ current: 1, voltage: 2, energy: 1 });
+  const router = useRouter();
   const maxHeight = 200; // Maximum tank height
 
   // Shared animated values for smooth transitions
-  const animatedHeight = useSharedValue(maxHeight * (sensorData.current / 100));
-  const animatedHeight2 = useSharedValue(maxHeight * (sensorData.voltage / 100));
-  const animatedHeight3 = useSharedValue(maxHeight * (sensorData.energy / 100));
+  const animatedValues = {
+    current: useSharedValue(0),
+    voltage: useSharedValue(0),
+    energy: useSharedValue(0),
+  };
+
+  // Sensor data state
+  const [sensorData, setSensorData] = useState({
+    current: 1,
+    voltage: 2,
+    energy: 1,
+  });
 
   // Socket listener for real-time data
   useEffect(() => {
-    socket.on("sensor-data1", (data) => {
-      // console.log(data);
-      const { voltage, current, power, totalEnergy } = data;
-      const energyValue = totalEnergy;
-      // console.log(energyValue);
+    const updateSensorData = (data) => {
       setSensorData({
-        current: parseFloat(current).toFixed(2),
-        voltage: parseFloat(voltage).toFixed(2),
-        energy: parseFloat(energyValue).toFixed(2),
+        current: Number(parseFloat(data.current).toFixed(2)),
+        voltage: Number(parseFloat(data.voltage).toFixed(2)),
+        energy: Number(parseFloat(data.energy).toFixed(2)),
       });
-    });
-    return () => socket.off("sensor-data");
+    };
+
+    socket.on("sensor-data1", updateSensorData);
+    return () => socket.off("sensor-data1", updateSensorData);
   }, []);
-  console.log(sensorData);
 
   // Update animation when sensor data changes
   useEffect(() => {
-    animatedHeight.value = withTiming(maxHeight * (sensorData.current / 4), {
-      duration: 800,
-      easing: Easing.inOut(Easing.ease),
-    });
-    animatedHeight2.value = withTiming(maxHeight * (sensorData.voltage / 250), {
-      duration: 800,
-      easing: Easing.inOut(Easing.ease),
-    });
-    animatedHeight3.value = withTiming(maxHeight * (sensorData.energy / 100), {
-      duration: 800,
-      easing: Easing.inOut(Easing.ease),
+    Object.keys(sensorData).forEach((key) => {
+      let scaleFactor = key === "current" ? 2.5 : key === "voltage" ? 250 : 300;
+      animatedValues[key].value = withTiming(maxHeight * (sensorData[key] / scaleFactor), {
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+      });
     });
   }, [sensorData]);
+  console.log(sensorData);
+
+  // Helper function to render CustomTank components
+  const renderTank = (label, value, unit, path, animatedHeight) => (
+    <TouchableOpacity onPress={() => router.push(path)} activeOpacity={0.7}>
+      <CustomTank
+        current={value}
+        maxHeight={250}
+        animatedHeight={animatedHeight}
+        placeholder={label}
+        value1={value}
+        unit={unit}
+        otherStyle={{ marginTop: 10 }}
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView className="h-full w-full bg-[#201E1E]">
@@ -74,41 +92,17 @@ const Home = () => {
         </View>
 
         {/* Tanks Display Section */}
-        <View className="flex flex-row items-center justify-evenly h-[300px] w-[90%] mt-8 ml-4 bg-[#444444] rounded-3xl">
-          <CustomTank
-            current={sensorData.current}
-            maxHeight={250}
-            animatedHeight={animatedHeight}
-            placeholder={"Current"}
-            value1={sensorData.current}
-            unit={"A"}
-            otherStyle={{ marginTop: 10 }}
-          />
-          <CustomTank
-            current={sensorData.voltage}
-            maxHeight={250}
-            animatedHeight={animatedHeight2}
-            placeholder={"Voltage"}
-            value1={sensorData.voltage}
-            unit={"V"}
-          />
-          <CustomTank
-            current={sensorData.energy}
-            maxHeight={250}
-            animatedHeight={animatedHeight3}
-            placeholder={"Energy"}
-            value1={sensorData.energy}
-            unit={"Wh"}
-          />
+        <View className="flex flex-row items-center justify-evenly h-[310px] w-[90%] mt-4 ml-4 bg-[#444444] rounded-3xl">
+          {renderTank("Current", sensorData.current, "A", "/current", animatedValues.current)}
+          {renderTank("Voltage", sensorData.voltage, "V", "/voltage", animatedValues.voltage)}
+          {renderTank("Energy", sensorData.energy, "Wh", "/energy", animatedValues.energy)}
         </View>
 
         {/* Graph Section */}
         <Text style={{ fontFamily: "Poppins-medium" }} className="text-[20px] text-white mt-4 ml-4">
           Total Energy Monitoring
         </Text>
-        <Graphs 
-        data={sensorData.energy}
-        />
+        <Graphs data={sensorData.energy} />
       </ScrollView>
     </SafeAreaView>
   );

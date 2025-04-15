@@ -1,14 +1,15 @@
 import mqtt from "mqtt";
 import { processMqttMessage } from "../controllers/sensor.controller.js";
-const mqttClient = mqtt.connect("mqtt://127.0.0.1:1883");
+const mqttClient = mqtt.connect("mqtt://192.168.92.156:1883");
 
 mqttClient.on("connect", () => {
     console.log("✅ Connected to MQTT Broker");
-    mqttClient.subscribe("energy/data");
+     mqttClient.subscribe("smartEnergy/data");
 });
 
 mqttClient.on("message", async (topic, message) => {
-    if (topic === "energy/data") {
+    if (topic === "smartEnergy/data") {
+        console.log("Received Energy Data:", message.toString());
         await processMqttMessage(message);
     }
 });

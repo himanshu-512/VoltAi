@@ -3,7 +3,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Inputfields from "../../components/inputfields";
 import CustomBtn from "../../components/CustomBtn";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
 
 const Login = () => {
    const router = useRouter();
@@ -15,7 +15,7 @@ const Login = () => {
         <TouchableOpacity
           className="h-[40px] w-[40px] rounded-full bg-[#444444] mt-10 ml-4 items-center justify-center"
           accessibilityLabel="Go back"
-          onPress={() => router.push("/sign-up")}
+          onPress={() => router.push("/sigh-up")}
         >
           <Image
             source={require("../../assets/images/arrow.png")}

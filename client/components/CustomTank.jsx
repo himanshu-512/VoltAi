@@ -28,6 +28,7 @@ const CustomTank = ({ current, animatedHeight,placeholder,unit,value1,otherStyle
           shadowOffset: { width: 0, height: 0 },
           shadowOpacity: 1,
           shadowRadius: 15,
+          marginTop: 20,
           elevation: 10,
         }}
       >

@@ -10,7 +10,7 @@ import mqttClient from "./config/mqttClient.js";
 import io from "./config/socket.js";
 import anomalyRoutes from "./routes/anomaly.routes.js";
 import sensorRoutes from "./routes/sensor.routes.js";
-//  import mqttClientwait from "./config/mqttSimulator.js";
+//   import mqttClientwait from "./config/mqttSimulator.js";
 
 const app = express();
 const httpServer = createServer(app);

@@ -33,5 +33,8 @@ export default function RootLayout() {
     <Stack.Screen name="(tabs)" options={{headerShown:false,statusBarHidden: true}}/>
     {/* <Stack.Screen name="(tabs)/home" options={{headerShown:false}}/> */}
     <Stack.Screen name="(auth)" options={{headerShown:false,statusBarHidden: true}}/>
+    <Stack.Screen name="(current)" options={{headerShown:false,statusBarHidden: true}}/>
+    <Stack.Screen name="(volltage)" options={{headerShown:false,statusBarHidden: true}}/>
+    <Stack.Screen name="(energy)" options={{headerShown:false,statusBarHidden: true}}/>
   </Stack>
 }
