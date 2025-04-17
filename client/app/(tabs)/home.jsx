@@ -42,7 +42,7 @@ const Home = () => {
   // Update animation when sensor data changes
   useEffect(() => {
     Object.keys(sensorData).forEach((key) => {
-      let scaleFactor = key === "current" ? 2.5 : key === "voltage" ? 250 : 300;
+      let scaleFactor = key === "current" ? 1 : key === "voltage" ? 250 : 500;
       animatedValues[key].value = withTiming(maxHeight * (sensorData[key] / scaleFactor), {
         duration: 500,
         easing: Easing.inOut(Easing.ease),

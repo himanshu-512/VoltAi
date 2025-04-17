@@ -4,15 +4,19 @@ import io from "../config/socket.js";
 import detectAnomaly from "../utils/detectAnomaly.js";
 import { getEnergy, saveSensorData } from "./energyController.js";
 import { parse } from "dotenv";
+import { getParticulardata } from "./particular.controller.js";
 export const processMqttMessage = async (message) => {
   try {
     const data = JSON.parse(message.toString());
     console.log("📡 Received Energy Data:", data);
     io.emit("sensor-data1", data);
+    getParticulardata(data);
     data.voltage = parseFloat(data.voltage);
     data.current = parseFloat(data.current);
     const energy = await getEnergy();
     console.log("💡 Energy Data:", energy);
+    
+    io.emit("sensor-data2", { current: 0.9 });
     // let timestamp = parseDate(data.timestamp);
     // io.emit("sensor-data", energy);
     // console.log(io.emit("sensor-data", energy));

@@ -45,6 +45,7 @@ const RenderTank = ({ label, value, unit, path, animatedHeight }) => {
 };
 
 const Current = () => {
+  const router = useRouter();
   const [sensorData, setSensorData] = useState({
     load1: 1,
     load2: 2,
@@ -64,21 +65,22 @@ const Current = () => {
   useEffect(() => {
     const updateSensorData = (data) => {
       setSensorData({
-        load1: Number(parseFloat(data.load1).toFixed(2)),
-        load2: Number(parseFloat(data.load2).toFixed(2)),
-        load3: Number(parseFloat(data.load3).toFixed(2)),
-        load4: Number(parseFloat(data.load4).toFixed(2)),
+        load1: Number(parseFloat(data.load_I1).toFixed(3)),
+        load2: Number(parseFloat(data.load_I2).toFixed(3)),
+        load3: Number(parseFloat(data.load_I3).toFixed(3)),
+        load4: Number(parseFloat(data.load_I4).toFixed(3)),
       });
     };
 
-    socket.on("sensor-data1", updateSensorData);
-    return () => socket.off("sensor-data1", updateSensorData);
+    socket.on("particular-data", updateSensorData);
+    return () => socket.off("particular-data", updateSensorData);
   }, []);
+  console.log("my data in parr",sensorData)
 
   // Update animated values when sensor data changes
   useEffect(() => {
     Object.keys(sensorData).forEach((key) => {
-      const scaleFactor = 3.0; // Adjust based on your max values for tank fill
+      const scaleFactor = 0.05; // Adjust based on your max values for tank fill
       animatedValues[key].value = withTiming(
         maxHeight * (sensorData[key] / scaleFactor),
         {
@@ -112,7 +114,7 @@ const Current = () => {
           />
           <CustomButton
             title="Graph"
-            onPress={() => console.log("Graph button pressed")}
+            onPress={() => router.push("/currentGraph")} 
             bgColor="bg-blue-500"
           />
         </View>

@@ -37,7 +37,7 @@ mqttClientwait.on("connect", () => {
         };
 
         // Publish the data to MQTT broker
-        mqttClientwait.publish("energy/data", JSON.stringify(energyData));
+        mqttClientwait.publish("smartEnergy/data", JSON.stringify(energyData));
 
         console.log("Simulated Energy Data:", energyData);
     }, 1000);

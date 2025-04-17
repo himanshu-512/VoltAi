@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://192.168.92.156:8009"; // Change to your backend URL
+const SOCKET_URL = "http://192.168.186.156:8009"; // Change to your backend URL
 
 const socket = io(SOCKET_URL, {
     transports: ["websocket"], // Ensures compatibility with React Native

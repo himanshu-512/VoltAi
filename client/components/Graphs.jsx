@@ -18,7 +18,7 @@ const Graphs = () => {
        console.log("Received data in graph:", data);
   
       const { voltage, current, power, energy } = data; // Ensure you're getting totalEnergy properly
-      const energyValue = energy ?? 0; 
+      const energyValue = power ?? 0; 
   
       // console.log("Energy Value:", energyValue);
   
