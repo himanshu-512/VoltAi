@@ -2,59 +2,72 @@ import React from "react";
 import { View, Text } from "react-native";
 import Svg, { Rect, Defs, LinearGradient, Stop } from "react-native-svg";
 import Animated, { useAnimatedProps } from "react-native-reanimated";
+// import { rgbaColor } from "react-native-reanimated/lib/typescript/Colors";
 
 const AnimatedRect = Animated.createAnimatedComponent(Rect);
 
-const CustomTank = ({ current, animatedHeight,placeholder,unit,value1,otherStyle }) => {
+const CustomTank = ({ current, animatedHeight, placeholder, unit, value1, otherStyle }) => {
   const animatedProps = useAnimatedProps(() => ({
-    y: 200 - animatedHeight.value,
+    y: 160 - animatedHeight.value,
     height: animatedHeight.value,
   }));
 
   return (
-    <View className={`items-center ${otherStyle} justify-center `}>
-      {/* Outer glowing capsule shape */}
+    <View className={`items-center ${otherStyle} justify-center`}>
+      {/* Outer container with rounded corners and white border */}
       <View
         style={{
-          width: 80,
-          height: 230,
-          borderRadius: 40,
-          borderWidth: 2,
-          borderColor: "white",
+          width: 100,
+          height: 272,
+          borderRadius: 30,
+          backgroundColor: "#14181B",
+          paddingVertical: 15,
           alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#444444",
-          shadowColor: "#FFB100",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 1,
-          shadowRadius: 15,
-          marginTop: 20,
-          elevation: 10,
+          justifyContent: "space-between",
+          borderWidth: 1.0,
+          borderColor: "rgba(255, 255, 255, 0.2)",
         }}
       >
-        <Svg width="60" height="200">
-          <Defs>
-            {/* Orange gradient fill */}
-            <LinearGradient id="orangeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <Stop offset="0%" stopColor="#FFB100" />
-              <Stop offset="100%" stopColor="#FF8800" />
-            </LinearGradient>
-          </Defs>
+        {/* Lightning icon */}
+        <Text style={{ fontSize: 20, color: "#FFB100",marginBottom: 5 }}>⚡</Text>
 
-          {/* Animated glowing liquid */}
-          <AnimatedRect
-            x="0"
-            width="60"
-            animatedProps={animatedProps}
-            fill="url(#orangeGradient)"
-            rx="30"
-          />
-        </Svg>
+        {/* Capsule liquid tank */}
+        <View
+          style={{
+            width: 70,
+            height: 160,
+            borderRadius: 35,
+            borderWidth: 1,
+            borderColor: "#333",
+            justifyContent: "flex-end",
+            overflow: "hidden",
+            backgroundColor: "#1c1c1e",
+          }}
+        >
+          <Svg width="70" height="160">
+            <Defs>
+              <LinearGradient id="orangeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <Stop offset="0%" stopColor="#FFB100" />
+                <Stop offset="100%" stopColor="#FF8800" />
+              </LinearGradient>
+            </Defs>
+
+            <AnimatedRect
+              x="0"
+              width="70"
+              rx="35"
+              animatedProps={animatedProps}
+              fill="url(#orangeGradient)"
+            />
+          </Svg>
+        </View>
+
+        {/* Labels */}
+        <Text style={{ color: "#ffffff", fontSize: 16 }}>{placeholder}</Text>
+        <Text style={{ color: "#FFB100", fontSize: 20, fontWeight: "bold" }}>
+          {value1} {unit}
+        </Text>
       </View>
-
-      {/* Current Label */}
-      <Text className="text-white mt-4 text-lg font-semibold">{placeholder}</Text>
-      <Text className="text-yellow-400 text-2xl font-bold">{value1} {unit}</Text>
     </View>
   );
 };

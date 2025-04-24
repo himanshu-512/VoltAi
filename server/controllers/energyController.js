@@ -14,8 +14,9 @@ export const getSensorData = async (req, res) => {
 export const saveSensorData = async (data) => {
   console.log( "dddsdscscscs",data);
   try {
-    const sensorData = new SensorData(data);
+    const sensorData = await new SensorData(data);
     await sensorData.save();
+    console.log("Data saved successfully:");
     // res.status(201).json(sensorData);
   } catch (error) { 
     console.log(error);
@@ -24,7 +25,7 @@ export const saveSensorData = async (data) => {
 
 export const getEnergy= async (req, res) => {
   try {
-    return  await SensorData.findOne({energy:{$exists: true}})
+    return  await SensorData.findOne({energy:{$gt:0}})
       .sort({ timestamp: -1 })
       .limit(1);
     // res.status(200).json(sensorData);

@@ -42,7 +42,7 @@ const Home = () => {
   // Update animation when sensor data changes
   useEffect(() => {
     Object.keys(sensorData).forEach((key) => {
-      let scaleFactor = key === "current" ? 1 : key === "voltage" ? 250 : 500;
+      let scaleFactor = key === "current" ? 1.5 : key === "voltage" ? 360 : 1500;
       animatedValues[key].value = withTiming(maxHeight * (sensorData[key] / scaleFactor), {
         duration: 500,
         easing: Easing.inOut(Easing.ease),
@@ -67,10 +67,10 @@ const Home = () => {
   );
 
   return (
-    <SafeAreaView className="h-full w-full bg-[#201E1E]">
+    <SafeAreaView className="h-full w-full bg-[#14181B]">
       <ScrollView>
         {/* Header Section */}
-        <View className="h-[50px] flex flex-row gap-2 items-center w-full bg-[#444444] rounded-b-2xl">
+        <View className="h-[50px] flex flex-row gap-2 items-center mt-3 w-full bg-[#14181B] rounded-b-2xl">
           <Image
             source={require("../../assets/images/sf.png")}
             className="h-[40px] w-[40px] ml-2"
@@ -84,7 +84,7 @@ const Home = () => {
 
         {/* Section Title */}
         <View className="flex flex-row justify-center mt-8 items-center w-full">
-          <View className="h-[40px] items-center justify-center w-[50%] bg-[#444444] rounded-full">
+          <View  className="h-[40px] items-center justify-center w-[50%] bg-[#14181B] rounded-full">
             <Text style={{ fontFamily: "Poppins-regular" }} className="text-lg text-[#F9DC75]">
               LOAD & POWER
             </Text>
@@ -92,7 +92,7 @@ const Home = () => {
         </View>
 
         {/* Tanks Display Section */}
-        <View className="flex flex-row items-center justify-evenly h-[310px] w-[90%] mt-4 ml-4 bg-[#444444] rounded-3xl">
+        <View className="flex flex-row items-center justify-evenly h-[335px] w-[90%] mt-4 ml-4 bg-[#14181B] rounded-3xl">
           {renderTank("Current", sensorData.current, "A", "/current", animatedValues.current)}
           {renderTank("Voltage", sensorData.voltage, "V", "/voltage", animatedValues.voltage)}
           {renderTank("Energy", sensorData.energy, "Wh", "/energy", animatedValues.energy)}
@@ -100,7 +100,7 @@ const Home = () => {
 
         {/* Graph Section */}
         <Text style={{ fontFamily: "Poppins-medium" }} className="text-[20px] text-white mt-4 ml-4">
-          Total Energy Monitoring
+          Total Power Usage
         </Text>
         <Graphs data={sensorData.energy} />
       </ScrollView>

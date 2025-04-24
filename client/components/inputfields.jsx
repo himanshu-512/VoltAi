@@ -6,7 +6,7 @@ const Inputfields = ({
   value,
   placeholder,
   handleChangeText,
-  
+  name,
   icons,
   otherStyles,
   ...props
@@ -21,6 +21,7 @@ const Inputfields = ({
         value={value}
         placeholder={placeholder}
         placeholderTextColor="#7B7B8B"
+        name={name}
         onChangeText={handleChangeText}
         style={{ fontFamily: "Poppins-semiBold" }}
         secureTextEntry={title === "Password" && !showPassword}

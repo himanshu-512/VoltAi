@@ -52,18 +52,18 @@ const Graphs = () => {
             },
             {
               data: Array(DATA_POINTS).fill(THRESHOLD),
-              color: () => `rgba(255, 0, 0, 1)`,
+              color: () => `rgba(134, 199, 199, 1)`,
               strokeWidth: 2,
             },
           ],
         }}
         width={screenWidth - 20}
-        height={300}
-        yAxisSuffix=" Wh"
+        height={350}
+        yAxisSuffix=" W"
         chartConfig={{
-          backgroundColor: "#444444",
-          backgroundGradientFrom: "#444444",
-          backgroundGradientTo: "#444444",
+          backgroundColor: "#14181B",
+          backgroundGradientFrom: "#14181B",
+          backgroundGradientTo: "#14181B",
           decimalPlaces: 1,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(249, 220, 117, ${opacity})`,
@@ -72,7 +72,7 @@ const Graphs = () => {
         bezier
         style={{ borderRadius: 10 }}
       />
-      <Text style={styles.thresholdText}>Threshold Barrier ({THRESHOLD} Wh)</Text>
+      {/* <Text style={styles.thresholdText}>Threshold Barrier ({THRESHOLD} Wh)</Text> */}
     </View>
   );
 };
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#444444",
     borderRadius: 30,
-    margin: 15,
+    margin: 11,
   },
   thresholdText: {
     color: "white",

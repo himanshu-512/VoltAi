@@ -10,13 +10,14 @@ import {
   StyleSheet,
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import socket from "../../config/sokite";
+import socket from "../../config/sokite"; // Make sure this is correctly configured
+import { router, useRouter } from "expo-router";
 
 const screenWidth = Dimensions.get("window").width;
-const THRESHOLD = 1.5; // You can adjust the threshold for current
+const THRESHOLD = 1.5;
 const DATA_POINTS = 10;
 
-// ✅ Reusable Graph Component (now uses current instead of energy)
+// ✅ Reusable Graph Component (specific to load ID)
 const Graphs = ({ loadId }) => {
   const [chartData, setChartData] = useState({
     labels: Array.from({ length: DATA_POINTS }, () => "--"),
@@ -25,8 +26,6 @@ const Graphs = ({ loadId }) => {
 
   useEffect(() => {
     const socketEvent = `particular-data${loadId}`;
-
-   
     const listener = (data) => {
       const { current } = data;
       const currentValue = current ?? 0;
@@ -47,7 +46,6 @@ const Graphs = ({ loadId }) => {
     socket.on(socketEvent, listener);
     return () => socket.off(socketEvent, listener);
   }, [loadId]);
-  console.log("data in p graph", chartData);
 
   return (
     <View style={styles.container}>
@@ -84,9 +82,7 @@ const Graphs = ({ loadId }) => {
         bezier
         style={{ borderRadius: 10 }}
       />
-      <Text style={styles.thresholdText}>
-        Threshold Barrier ({THRESHOLD} A)
-      </Text>
+      <Text style={styles.thresholdText}>Threshold Barrier ({THRESHOLD} A)</Text>
     </View>
   );
 };
@@ -106,6 +102,7 @@ const CustomButton = ({ title, onPress, bgColor = "bg-red-500" }) => (
 
 // ✅ Main Screen
 const CurrentGraph = () => {
+  const router = useRouter();
   return (
     <SafeAreaView className="flex-1 bg-[#201E1E]">
       <ScrollView>
@@ -114,12 +111,9 @@ const CurrentGraph = () => {
           <Text className="text-xl text-white font-bold">Current Info</Text>
         </View>
 
-        {/* Buttons Section */}
+        {/* Buttons */}
         <View className="flex-row mt-10 justify-evenly gap-4">
-          <CustomButton
-            title="Value"
-            onPress={() => console.log("Value button pressed")}
-          />
+          <CustomButton title="Value" onPress={() => router.push("/current")} />
           <CustomButton
             title="Graph"
             onPress={() => console.log("Graph button pressed")}
@@ -127,7 +121,7 @@ const CurrentGraph = () => {
           />
         </View>
 
-        {/* Load Graphs */}
+        {/* Dynamic Graphs */}
         {[1, 2, 3, 4].map((load) => (
           <View key={load}>
             <Text className="text-white text-2xl text-center font-bold mt-4">

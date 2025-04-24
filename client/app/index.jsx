@@ -9,6 +9,7 @@ export default function Index() {
         <Text style={{fontFamily:"Poppins-Bold"}} className="text-7xl  text-center  text-[#F9DC75]">
           Welcome!
         </Text>
+        <Text className="text-white text-center text-lg">Optimize your energy consumption{"\n"}with VoltAI</Text>
       </View>
       <View className=" h-[200px] w-[50%] items-center justify-center rounded-full  ">
         <Image
@@ -18,24 +19,20 @@ export default function Index() {
           style={{}}
         />
       </View>
-
+<View className="items-center justify-center ml-9">
       <TouchableOpacity className="h-[60px] w-[90%] items-center justify-center rounded-full ">
         <Link href={"/sigh-up"}>
           <View
             style={{ border: "1px solid #444444" }}
-            className="h-[60px] w-[90%] items-center justify-center rounded-full bg-[#444444]"
+            className="h-[60px] w-[90%] items-center justify-center rounded-2xl  bg-[#F3C41E]"
           >
-            <Text style={{fontFamily:"Poppins-semiBold"}} className="text-3xl  text-[#F9DC75]">
-              Continue
+            <Text style={{fontFamily:"Poppins-semiBold"}} className="text-2xl text-black font-bold">
+              Get Started
             </Text>
-
-            <Image
-              source={require("../assets/images/arrow.png")}
-              className="absolute right-5 h-[30px] w-[30px] rotate-[-180deg]"
-            />
           </View>
         </Link>
       </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }

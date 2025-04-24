@@ -54,7 +54,7 @@ const TabLayout = () => {
         title: "home",
         tabBarIcon: ({ color, focused }) => (
           <TabIcon
-          source={require("../../assets/images/home.png")}
+          source={require("../../assets/images/home1.png")}
           color={color}
           name="Home"
           focused={focused}
@@ -66,7 +66,31 @@ const TabLayout = () => {
         title: "Graphs",
         tabBarIcon: ({ color, focused }) => (
           <TabIcon
-          source={require("../../assets/images/graph33.png")}
+          source={require("../../assets/images/ff.png")}
+          color={color}
+          name="Graphs"
+          focused={focused}
+          />
+        )
+       }} />
+       <Tabs.Screen name="profile" options={{ 
+        headerShown: false,
+        title: "Profile",
+        tabBarIcon: ({ color, focused }) => (
+          <TabIcon
+          source={require("../../assets/images/profile12.png")}
+          color={color}
+          name="Graphs"
+          focused={focused}
+          />
+        )
+       }} />
+        <Tabs.Screen name="setting" options={{ 
+        headerShown: false,
+        title: "Setting",
+        tabBarIcon: ({ color, focused }) => (
+          <TabIcon
+          source={require("../../assets/images/settings50.png")}
           color={color}
           name="Graphs"
           focused={focused}
